@@ -5,6 +5,9 @@ import styled from "styled-components";
 import DocumentationView from "./views/DocumentationView";
 import TimersView from "./views/TimersView";
 
+// CSS Reset
+import "the-new-css-reset/css/reset.css";
+
 const Container = styled.div`
   background: #f0f6fb;
   height: 100vh;
