@@ -9,17 +9,21 @@ const Label = styled.label`
   display: block;
 `;
 
-const InnerInput = styled.input``;
+const Input = styled.input``;
 
-const Input = ({ label, ...args }) => {
+const NumericInput = ({ label, value, setValue, ...args }) => {
   const id = useId();
+
+  const onChange = (event) => {
+    setValue(Number(event.target.value || 0));
+  };
 
   return (
     <Container>
       <Label htmlFor={id}>{label}</Label>
-      <InnerInput {...args} id={id} />
+      <Input {...args} onChange={onChange} type="number" id={id} />
     </Container>
   );
 };
 
-export default Input;
+export default NumericInput;

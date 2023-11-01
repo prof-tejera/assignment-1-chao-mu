@@ -10,6 +10,9 @@ import TimeInput from "../generic/TimeInput";
 import VisualProgress from "../generic/VisualProgress";
 import TimerControls from "../generic/TimerControls";
 
+// Ours - Timer
+import { useTimer } from "../../utils/timer";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -36,69 +39,30 @@ const ControlsColumn = styled.div`
 `;
 
 const Countdown = () => {
-  const [startedAt, setStartedAt] = useState(null);
-  const [transpired, setTranspired] = useState(0);
-  const [paused, setPaused] = useState(true);
-  const [target, setTarget] = useState(0);
-  const [transpiredAtPause, setTranspiredAtPause] = useState(0);
+  const [timer, dispatch] = useTimer();
 
   useEffect(() => {
-    // Every half second, update the clock
     const intervalId = setInterval(() => {
-      if (paused) {
-        return;
-      }
-
-      setTranspired(
-        Math.min(transpiredAtPause + Date.now() - startedAt, target)
-      );
-    }, 25);
+      dispatch({ type: "tick" });
+    }, 20);
 
     return () => clearInterval(intervalId);
-  }, [startedAt, transpiredAtPause, paused, target]);
-
-  useEffect(() => {
-    onReset();
-  }, [target]);
-
-  const onResume = () => {
-    setStartedAt(Date.now());
-    setPaused(false);
-  };
-
-  const onPause = () => {
-    setTranspiredAtPause(transpired);
-    setPaused(true);
-  };
-
-  const onReset = () => {
-    setTranspired(0);
-    setTranspiredAtPause(0);
-    setPaused(true);
-  };
-
-  const onEnd = () => {
-    setTranspired(target);
-    setPaused(true);
-  };
+  }, [dispatch]);
 
   return (
     <Container>
       <ProgressRow>
-        <TimeDisplay timeMs={target - transpired} />
+        <TimeDisplay timeMs={timer.target - timer.transpired} />
         <VisualProgressWrapper>
-          <VisualProgress progress={transpired / target} />
+          <VisualProgress progress={timer.transpired / timer.target} />
         </VisualProgressWrapper>
       </ProgressRow>
       <ControlsColumn>
-        <TimeInput timeMs={target} onChange={setTarget} />
-        <TimerControls
-          paused={paused}
-          onResume={onResume}
-          onPause={onPause}
-          onReset={onReset}
-          onEnd={onEnd}
+        <TimeInput
+          timeMs={timer.target}
+          setValue={(target) => dispatch({ target, type: "setTarget" })}
         />
+        <TimerControls paused={timer.paused} dispatch={dispatch} />
       </ControlsColumn>
     </Container>
   );

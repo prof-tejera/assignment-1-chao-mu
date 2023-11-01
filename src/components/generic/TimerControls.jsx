@@ -7,21 +7,21 @@ const Container = styled.div`
   gap: 0.1rem;
 `;
 
-const TimerControls = ({ paused, onResume, onPause, onReset, onEnd }) => (
+const TimerControls = ({ dispatch, paused }) => (
   <Container>
     {paused ? (
-      <Button primary onClick={onResume}>
+      <Button primary onClick={() => dispatch({ type: "resume" })}>
         Start
       </Button>
     ) : (
-      <Button primary onClick={onPause}>
+      <Button primary onClick={() => dispatch({ type: "pause" })}>
         Pause
       </Button>
     )}
-    <Button secondary onClick={onReset}>
+    <Button secondary onClick={() => dispatch({ type: "reset" })}>
       Reset
     </Button>
-    <Button secondary onClick={onEnd}>
+    <Button secondary onClick={() => dispatch({ type: "end" })}>
       End
     </Button>
   </Container>

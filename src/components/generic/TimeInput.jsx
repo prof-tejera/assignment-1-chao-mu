@@ -4,7 +4,7 @@ import { splitTimeMs, joinTimeMs, bindTimeInput } from "../../utils/helpers";
 
 import styled from "styled-components";
 
-import Input from "./Input";
+import NumericInput from "./NumericInput";
 
 const Container = styled.div`
   display: flex;
@@ -12,15 +12,10 @@ const Container = styled.div`
   align-items: flex-end;
 `;
 
-const TimeInput = ({ onChange }) => {
+const TimeInput = ({ setValue }) => {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-
-  const bindTimeInput = (setValue) => (event) => {
-    const value = Number(event.target.value);
-    setValue(value);
-  };
 
   useEffect(() => {
     const timeMs = joinTimeMs({
@@ -28,31 +23,33 @@ const TimeInput = ({ onChange }) => {
       minutes,
       seconds,
     });
-    onChange && onChange(timeMs);
-  }, [onChange, hours, minutes, seconds]);
+
+    setValue && setValue(timeMs);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hours, minutes, seconds]);
 
   return (
     <Container>
-      <Input
-        id="hours"
+      <NumericInput
+        name="hours"
         label="Hours"
-        type="number"
         value={hours}
-        onChange={bindTimeInput(setHours)}
+        setValue={setHours}
       />
-      <Input
-        id="minutes"
+      <NumericInput
+        name="minutes"
         label="Minutes"
         type="number"
         value={minutes}
-        onChange={bindTimeInput(setMinutes)}
+        setValue={setMinutes}
       />
-      <Input
-        id="seconds"
+      <NumericInput
+        name="seconds"
         label="Seconds"
         type="number"
         value={seconds}
-        onChange={bindTimeInput(setSeconds)}
+        setValue={setSeconds}
       />
     </Container>
   );
