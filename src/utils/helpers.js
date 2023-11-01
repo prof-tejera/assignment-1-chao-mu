@@ -1,3 +1,29 @@
-// Add helpers here. This is usually code that is just JS and not React code. Example: write a function that
-// calculates number of minutes when passed in seconds. Things of this nature that you don't want to copy/paste
-// everywhere.
+const msPerSecond = 1000;
+const msPerMinute = msPerSecond * 60;
+const msPerHour = msPerMinute * 60;
+
+export const padTime = (t) => t.toString().padStart(2, "0");
+
+export const splitTimeMs = (timeMs) => {
+  // Convert to hours, truncate the remainder.
+  const hoursExact = timeMs / msPerHour;
+  const hours = Math.floor(hoursExact);
+
+  // Take the remainder from before and convert to minutes
+  const minutesExact = (hoursExact - hours) * 60;
+  const minutes = Math.floor(minutesExact);
+
+  // Take the remainder from before and convert to seconds
+  const secondsExact = (minutesExact - minutes) * 60;
+  const seconds = Math.floor(secondsExact);
+
+  return { hours, minutes, seconds };
+};
+
+export const joinTimeMs = ({ hours, minutes, seconds }) => {
+  return hours * msPerHour + minutes * msPerMinute + seconds * msPerSecond;
+};
+
+export const bindEvent = (onChange) => (event) => {
+  onChange(event.target.value);
+};
