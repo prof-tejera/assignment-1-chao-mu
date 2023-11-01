@@ -24,6 +24,8 @@ export const joinTimeMs = ({ hours, minutes, seconds }) => {
   return hours * msPerHour + minutes * msPerMinute + seconds * msPerSecond;
 };
 
-export const bindEvent = (onChange) => (event) => {
-  onChange(event.target.value);
-};
+export const bindEvent =
+  (...onChanges) =>
+  (event) => {
+    onChanges.forEach((onChange) => onChange(event.target.value));
+  };

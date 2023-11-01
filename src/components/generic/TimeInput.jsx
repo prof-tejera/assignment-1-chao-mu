@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 
-import { splitTimeMs, joinTimeMs, bindEvent } from "../../utils/helpers";
+import { splitTimeMs, joinTimeMs, bindTimeInput } from "../../utils/helpers";
 
 import styled from "styled-components";
 
 import Input from "./Input";
-import Button from "./Button";
 
 const Container = styled.div`
   display: flex;
@@ -13,22 +12,24 @@ const Container = styled.div`
   align-items: flex-end;
 `;
 
-const TimeInput = ({ timeMs, onChange }) => {
+const TimeInput = ({ onChange }) => {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
-  useEffect(() => {
-    const updates = splitTimeMs(timeMs);
-
-    setHours(updates.hours);
-    setMinutes(updates.minutes);
-    setSeconds(updates.seconds);
-  }, [timeMs]);
-
-  const setTime = () => {
-    onChange && onChange(joinTimeMs({ hours, minutes, seconds }));
+  const bindTimeInput = (setValue) => (event) => {
+    const value = Number(event.target.value);
+    setValue(value);
   };
+
+  useEffect(() => {
+    const timeMs = joinTimeMs({
+      hours,
+      minutes,
+      seconds,
+    });
+    onChange && onChange(timeMs);
+  }, [onChange, hours, minutes, seconds]);
 
   return (
     <Container>
@@ -36,30 +37,23 @@ const TimeInput = ({ timeMs, onChange }) => {
         id="hours"
         label="Hours"
         type="number"
-        min="0"
-        max="99"
         value={hours}
-        onChange={bindEvent(setHours)}
+        onChange={bindTimeInput(setHours)}
       />
       <Input
         id="minutes"
         label="Minutes"
         type="number"
-        min="0"
-        max="59"
         value={minutes}
-        onChange={bindEvent(setMinutes)}
+        onChange={bindTimeInput(setMinutes)}
       />
       <Input
         id="seconds"
         label="Seconds"
         type="number"
-        min="0"
-        max="59"
         value={seconds}
-        onChange={bindEvent(setSeconds)}
+        onChange={bindTimeInput(setSeconds)}
       />
-      <Button onClick={() => setTime()}>Set</Button>
     </Container>
   );
 };

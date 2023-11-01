@@ -4,23 +4,35 @@ import { padTime, splitTimeMs } from "../../utils/helpers.js";
 
 const Container = styled.div`
   display: flex;
-  gap: 0.1rem;
+  gap: 0.25rem;
 `;
 
-const TimeComponent = styled.div``;
+const TimeComponent = styled.div`
+  display: flex;
+  align-items: flex-end;
+`;
 
-const Separator = () => <div>:</div>;
+const Small = styled.div`
+  font-size: 0.95rem;
+`;
 
 const TimeDisplay = ({ timeMs }) => {
   const { hours, minutes, seconds } = splitTimeMs(timeMs);
 
   return (
     <Container>
-      <TimeComponent>{padTime(hours)}</TimeComponent>
-      <Separator />
-      <TimeComponent>{padTime(minutes)}</TimeComponent>
-      <Separator />
-      <TimeComponent>{padTime(seconds)}</TimeComponent>
+      <TimeComponent>
+        {padTime(hours)}
+        <Small>h</Small>
+      </TimeComponent>
+      <TimeComponent>
+        {padTime(minutes)}
+        <Small>m</Small>
+      </TimeComponent>
+      <TimeComponent>
+        {padTime(seconds)}
+        <Small>s</Small>
+      </TimeComponent>
     </Container>
   );
 };
