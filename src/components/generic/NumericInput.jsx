@@ -27,7 +27,7 @@ const NumericInput = ({ label, setValue, ...args }) => {
   const id = useId();
 
   const onChange = (event) => {
-    setValue(Number(event.target.value || 0));
+    setValue(event.target.value ? Number(event.target.value) : null);
   };
 
   return (
