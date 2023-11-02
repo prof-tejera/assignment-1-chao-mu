@@ -24,6 +24,7 @@ const Container = styled.div`
 const InputsRow = styled.div`
   display: flex;
   gap: 0.5rem;
+  align-items: flex-end;
 `;
 
 const XY = () => {
@@ -52,6 +53,7 @@ const XY = () => {
       <ControlsColumn>
         <InputsRow>
           <TimeInput
+            header="Round Length"
             timeMs={msPerRound}
             setValue={(v) => {
               setMsPerRound(v);

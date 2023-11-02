@@ -16,25 +16,26 @@ import { useTimer } from "../../utils/timer";
 const Container = styled.div`
   display: flex;
   width: min-content;
-  align-items: flex-start;
   gap: 1rem;
 `;
 
 const InputsGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1.2rem;
 `;
 
-const ControlsColumn = styled.div`
+const LeftColumn = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 `;
 
-const ProgressColumn = styled.div`
+const RightColumn = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
 `;
 
 const Tabata = () => {
@@ -63,9 +64,10 @@ const Tabata = () => {
 
   return (
     <Container>
-      <ControlsColumn>
+      <LeftColumn>
         <InputsGroup>
           <TimeInput
+            header="Work Round"
             timeMs={msPerWork}
             setValue={(v) => {
               setMsPerWork(v);
@@ -73,25 +75,17 @@ const Tabata = () => {
             }}
           />
           <TimeInput
+            header="Rest Round"
             timeMs={msPerRest}
             setValue={(v) => {
               setMsPerRest(v);
               setTarget((msPerWork + v) * rounds);
             }}
           />
-          <NumericInput
-            name="rounds"
-            label="Rounds"
-            value={rounds}
-            setValue={(v) => {
-              setRounds(v);
-              setTarget((msPerWork + msPerRest) * v);
-            }}
-          />
         </InputsGroup>
         <TimerControls dispatch={dispatch} paused={timer.paused} />
-      </ControlsColumn>
-      <ProgressColumn>
+      </LeftColumn>
+      <RightColumn>
         {isWorking ? (
           <RoundsDisplay
             header="Working"
@@ -107,7 +101,16 @@ const Tabata = () => {
             rounds={rounds}
           />
         )}
-      </ProgressColumn>
+        <NumericInput
+          name="rounds"
+          label="Rounds"
+          value={rounds}
+          setValue={(v) => {
+            setRounds(v);
+            setTarget((msPerWork + msPerRest) * v);
+          }}
+        />
+      </RightColumn>
     </Container>
   );
 };
