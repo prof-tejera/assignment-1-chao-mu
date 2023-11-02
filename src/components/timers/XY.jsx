@@ -53,7 +53,7 @@ const XY = () => {
       <ControlsColumn>
         <InputsRow>
           <TimeInput
-            header="Round Length"
+            header="Round Settings"
             timeMs={msPerRound}
             setValue={(v) => {
               setMsPerRound(v);
