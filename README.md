@@ -60,4 +60,4 @@ Timers: `localhost:3000`. Documentation: `localhost:3000/docs`
 
 # Citations
 
-Color scheme from here: https://www.codeofcolors.com/halloween-colors.html
+Component styling was inspired by the tailwind styled components here: https://flowbite.com/

@@ -23,7 +23,7 @@ const Timer = styled.div`
 `;
 
 const TimerTitle = styled.div`
-  font-size: 1.5rem;
+  font-size: 2.5rem;
 `;
 
 const TimersView = () => {

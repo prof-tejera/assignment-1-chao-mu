@@ -7,7 +7,7 @@ const Outer = styled.div`
 `;
 
 const Inner = styled.div`
-  background-color: black;
+  background-color: rgb(133, 226, 31);
 `;
 
 const VisualProgress = ({ progress, column = false }) => {

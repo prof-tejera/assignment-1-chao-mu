@@ -19,7 +19,8 @@ const InputGroup = styled.div`
 `;
 
 const Header = styled.div`
-  font-size: 1.15rem;
+  font-size: 2rem;
+  font-weight: 600;
 `;
 
 const TimeInput = ({ setValue, header, column = false }) => {

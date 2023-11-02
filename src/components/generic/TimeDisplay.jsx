@@ -10,10 +10,11 @@ const Container = styled.div`
 const TimeComponent = styled.div`
   display: flex;
   align-items: flex-end;
+  font-size: 3rem;
 `;
 
 const Small = styled.div`
-  font-size: 0.95rem;
+  font-size: 2rem;
 `;
 
 const TimeDisplay = ({ timeMs }) => {

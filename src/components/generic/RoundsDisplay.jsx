@@ -11,12 +11,15 @@ const Container = styled.div`
   padding: 0.5rem;
 `;
 
-const InProgress = styled.div``;
+const InProgress = styled.div`
+  font-size: 3rem;
+`;
 
 const ProgressGroup = styled.div``;
 
 const RoundHeader = styled.div`
   font-weight: 700;
+  font-size: 3rem;
 `;
 
 const RoundsDisplay = ({ transpired, currentRound, rounds, header }) => {
