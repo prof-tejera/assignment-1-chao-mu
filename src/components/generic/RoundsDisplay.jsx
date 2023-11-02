@@ -5,37 +5,30 @@ import TimeDisplay from "../generic/TimeDisplay";
 
 const Container = styled.div`
   display: flex;
-  gap: 0.25rem;
-  flex-direction: column;
+  gap: 1rem;
   align-items: center;
-`;
-
-const RoundCounter = styled.div``;
-
-const Finished = styled.div`
-  font-weight: 800;
+  border: solid;
+  padding: 0.5rem;
 `;
 
 const InProgress = styled.div``;
 
-const RoundsDisplay = ({ transpired, msPerRound, rounds }) => {
-  const roundIdx = Math.floor(transpired / msPerRound);
-  const roundTranspired = transpired - roundIdx * msPerRound;
+const ProgressGroup = styled.div``;
 
-  const currentRound = roundIdx + 1;
+const RoundHeader = styled.div`
+  font-weight: 700;
+`;
 
+const RoundsDisplay = ({ transpired, currentRound, rounds, header }) => {
   return (
     <Container>
-      <RoundCounter>
-        {currentRound > rounds ? (
-          <Finished>Finished all {rounds} rounds</Finished>
-        ) : (
-          <InProgress>
-            Round {roundIdx + 1} of {rounds}{" "}
-          </InProgress>
-        )}
-      </RoundCounter>
-      <TimeDisplay timeMs={roundTranspired} />
+      <RoundHeader>{header}</RoundHeader>
+      <ProgressGroup>
+        <InProgress>
+          Round {Math.min(rounds, currentRound)} of {rounds}{" "}
+        </InProgress>
+        <TimeDisplay timeMs={transpired} />
+      </ProgressGroup>
     </Container>
   );
 };

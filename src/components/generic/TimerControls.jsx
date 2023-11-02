@@ -7,24 +7,49 @@ const Container = styled.div`
   gap: 0.1rem;
 `;
 
-const TimerControls = ({ dispatch, paused }) => (
-  <Container>
-    {paused ? (
-      <Button primary onClick={() => dispatch({ type: "resume" })}>
-        Start
+const TimerControls = ({
+  dispatch,
+  paused,
+  onResume,
+  onPause,
+  onReset,
+  onEnd,
+}) => {
+  if (!onResume) {
+    onResume = () => dispatch({ type: "resume" });
+  }
+
+  if (!onPause) {
+    onPause = () => dispatch({ type: "pause" });
+  }
+
+  if (!onReset) {
+    onReset = () => dispatch({ type: "reset" });
+  }
+
+  if (!onEnd) {
+    onEnd = () => dispatch({ type: "end" });
+  }
+
+  return (
+    <Container>
+      {paused ? (
+        <Button primary onClick={onResume}>
+          Start
+        </Button>
+      ) : (
+        <Button primary onClick={onPause}>
+          Pause
+        </Button>
+      )}
+      <Button secondary onClick={onReset}>
+        Reset
       </Button>
-    ) : (
-      <Button primary onClick={() => dispatch({ type: "pause" })}>
-        Pause
+      <Button secondary onClick={onEnd}>
+        End
       </Button>
-    )}
-    <Button secondary onClick={() => dispatch({ type: "reset" })}>
-      Reset
-    </Button>
-    <Button secondary onClick={() => dispatch({ type: "end" })}>
-      End
-    </Button>
-  </Container>
-);
+    </Container>
+  );
+};
 
 export default TimerControls;

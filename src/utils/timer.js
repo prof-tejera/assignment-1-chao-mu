@@ -25,7 +25,7 @@ const timerReducer = (state, action) => {
       };
     }
     case "reset": {
-      return { ...initialState };
+      return { ...initialState, target: state.target };
     }
     case "end": {
       return {
@@ -44,12 +44,15 @@ const timerReducer = (state, action) => {
         return state;
       }
 
+      const transpired = Math.min(
+        state.target,
+        state.transpiredAtPause + Date.now() - state.startedAt
+      );
+
       return {
         ...state,
-        transpired: Math.min(
-          state.target,
-          state.transpiredAtPause + Date.now() - state.startedAt
-        ),
+        transpired,
+        paused: state.target === transpired,
       };
     }
     default: {
@@ -58,4 +61,16 @@ const timerReducer = (state, action) => {
   }
 };
 
-export const useTimer = () => useReducer(timerReducer, initialState);
+const makeEffect = (dispatch) => () => {
+  const intervalId = setInterval(() => {
+    dispatch({ type: "tick" });
+  }, 20);
+
+  return () => clearInterval(intervalId);
+};
+
+export const useTimer = () => {
+  const [state, dispatch] = useReducer(timerReducer, initialState);
+
+  return [state, dispatch, makeEffect(dispatch)];
+};

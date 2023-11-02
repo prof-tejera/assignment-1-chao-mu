@@ -9,9 +9,11 @@ const Label = styled.label`
   display: block;
 `;
 
-const Input = styled.input``;
+const Input = styled.input`
+  width: 100%;
+`;
 
-const NumericInput = ({ label, value, setValue, ...args }) => {
+const NumericInput = ({ label, setValue, ...args }) => {
   const id = useId();
 
   const onChange = (event) => {

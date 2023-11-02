@@ -9,10 +9,10 @@ import NumericInput from "./NumericInput";
 const Container = styled.div`
   display: flex;
   gap: 0.5rem;
-  align-items: flex-end;
+  align-items: flex-start;
 `;
 
-const TimeInput = ({ setValue }) => {
+const TimeInput = ({ setValue, column = false }) => {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
@@ -29,8 +29,12 @@ const TimeInput = ({ setValue }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hours, minutes, seconds]);
 
+  const containerStyle = {
+    flexDirection: column ? "column" : "row",
+  };
+
   return (
-    <Container>
+    <Container style={containerStyle}>
       <NumericInput
         name="hours"
         label="Hours"

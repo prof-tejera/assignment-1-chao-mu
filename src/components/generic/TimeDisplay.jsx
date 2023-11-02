@@ -17,7 +17,7 @@ const Small = styled.div`
 `;
 
 const TimeDisplay = ({ timeMs }) => {
-  const { hours, minutes, seconds } = splitTimeMs(timeMs);
+  const { hours, minutes, seconds, ms } = splitTimeMs(timeMs);
 
   return (
     <Container>
@@ -32,6 +32,10 @@ const TimeDisplay = ({ timeMs }) => {
       <TimeComponent>
         {padTime(seconds)}
         <Small>s</Small>
+      </TimeComponent>
+      <TimeComponent>
+        {padTime(ms, 3)}
+        <Small>ms</Small>
       </TimeComponent>
     </Container>
   );

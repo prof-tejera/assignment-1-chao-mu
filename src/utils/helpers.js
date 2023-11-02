@@ -2,7 +2,7 @@ const msPerSecond = 1000;
 const msPerMinute = msPerSecond * 60;
 const msPerHour = msPerMinute * 60;
 
-export const padTime = (t) => t.toString().padStart(2, "0");
+export const padTime = (t, digits = 2) => t.toString().padStart(digits, "0");
 
 export const splitTimeMs = (timeMs) => {
   // Convert to hours, truncate the remainder.
@@ -17,7 +17,9 @@ export const splitTimeMs = (timeMs) => {
   const secondsExact = (minutesExact - minutes) * 60;
   const seconds = Math.floor(secondsExact);
 
-  return { hours, minutes, seconds };
+  const ms = Math.floor((secondsExact - seconds) * 1000);
+
+  return { hours, minutes, seconds, ms };
 };
 
 export const joinTimeMs = ({ hours, minutes, seconds }) => {

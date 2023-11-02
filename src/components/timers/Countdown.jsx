@@ -1,5 +1,5 @@
 // React
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 // styled-components
 import styled from "styled-components";
@@ -15,55 +15,52 @@ import { useTimer } from "../../utils/timer";
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
   gap: 1rem;
-`;
-
-const VisualProgressWrapper = styled.div`
-  display: flex;
-  width: 10rem;
-  height: 2rem;
-`;
-
-const ProgressRow = styled.div`
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
 `;
 
 const ControlsColumn = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   gap: 0.5rem;
 `;
 
-const Countdown = () => {
-  const [timer, dispatch] = useTimer();
+const ProgressColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+`;
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      dispatch({ type: "tick" });
-    }, 20);
+const Countdown = ({ reverse = false }) => {
+  const [timer, dispatch, effect] = useTimer();
 
-    return () => clearInterval(intervalId);
-  }, [dispatch]);
+  useEffect(effect);
+
+  const displayedTime = reverse
+    ? timer.transpired
+    : timer.target - timer.transpired;
+
+  let displayedProgress =
+    timer.target > 0 ? timer.transpired / timer.target : 0;
+  if (!reverse) {
+    displayedProgress = 1 - displayedProgress;
+  }
 
   return (
     <Container>
-      <ProgressRow>
-        <TimeDisplay timeMs={timer.target - timer.transpired} />
-        <VisualProgressWrapper>
-          <VisualProgress progress={timer.transpired / timer.target} />
-        </VisualProgressWrapper>
-      </ProgressRow>
       <ControlsColumn>
         <TimeInput
+          column
           timeMs={timer.target}
           setValue={(target) => dispatch({ target, type: "setTarget" })}
         />
         <TimerControls paused={timer.paused} dispatch={dispatch} />
       </ControlsColumn>
+      <ProgressColumn>
+        <TimeDisplay timeMs={displayedTime} />
+        <VisualProgress column progress={displayedProgress} />
+      </ProgressColumn>
     </Container>
   );
 };
