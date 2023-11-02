@@ -31,6 +31,7 @@ const timerReducer = (state, action) => {
       return {
         ...state,
         transpired: state.target,
+        paused: true,
       };
     }
     case "setTarget": {
