@@ -9,6 +9,7 @@ import TimeInput from "../generic/TimeInput";
 import TimerControls from "../generic/TimerControls";
 import NumericInput from "../generic/NumericInput";
 import RoundsDisplay from "../generic/RoundsDisplay";
+import ControlsColumn from "../generic/ControlsColumn";
 
 // Ours - Timer
 import { useTimer } from "../../utils/timer";
@@ -22,12 +23,6 @@ const Container = styled.div`
 
 const InputsRow = styled.div`
   display: flex;
-  gap: 0.5rem;
-`;
-
-const ControlsColumn = styled.div`
-  display: flex;
-  flex-direction: column;
   gap: 0.5rem;
 `;
 

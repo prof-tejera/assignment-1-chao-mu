@@ -15,8 +15,8 @@ import { useTimer } from "../../utils/timer";
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: min-content;
+  align-items: flex-start;
   gap: 1rem;
 `;
 
@@ -30,6 +30,11 @@ const ControlsColumn = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+`;
+
+const ProgressColumn = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const Tabata = () => {
@@ -50,28 +55,14 @@ const Tabata = () => {
   const completedRounds = Math.floor(completedRoundsExact);
   const roundRemainder = (completedRoundsExact - completedRounds) * msPerRound;
 
+  const isWorking = roundRemainder < msPerWork || !timer.transpired;
+
   const completedWorkRounds =
     roundRemainder > msPerWork ? completedRounds + 1 : completedRounds;
   const completedRestRounds = completedRounds;
 
   return (
     <Container>
-      {roundRemainder < msPerWork ? (
-        <RoundsDisplay
-          header="Working"
-          transpired={msPerWork - Math.min(roundRemainder, msPerWork)}
-          currentRound={completedWorkRounds}
-          rounds={rounds}
-        />
-      ) : (
-        <RoundsDisplay
-          header="Resting"
-          transpired={msPerRest - Math.max(0, roundRemainder - msPerWork)}
-          currentRound={completedRestRounds + 1}
-          rounds={rounds}
-        />
-      )}
-
       <ControlsColumn>
         <InputsGroup>
           <TimeInput
@@ -100,6 +91,23 @@ const Tabata = () => {
         </InputsGroup>
         <TimerControls dispatch={dispatch} paused={timer.paused} />
       </ControlsColumn>
+      <ProgressColumn>
+        {isWorking ? (
+          <RoundsDisplay
+            header="Working"
+            transpired={msPerWork - Math.min(roundRemainder, msPerWork)}
+            currentRound={completedWorkRounds + 1}
+            rounds={rounds}
+          />
+        ) : (
+          <RoundsDisplay
+            header="Resting"
+            transpired={msPerRest - Math.max(0, roundRemainder - msPerWork)}
+            currentRound={completedRestRounds + 1}
+            rounds={rounds}
+          />
+        )}
+      </ProgressColumn>
     </Container>
   );
 };

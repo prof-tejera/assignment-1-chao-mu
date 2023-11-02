@@ -9,6 +9,7 @@ import TimeDisplay from "../generic/TimeDisplay";
 import TimeInput from "../generic/TimeInput";
 import VisualProgress from "../generic/VisualProgress";
 import TimerControls from "../generic/TimerControls";
+import ControlsColumn from "../generic/ControlsColumn";
 
 // Ours - Timer
 import { useTimer } from "../../utils/timer";
@@ -16,13 +17,6 @@ import { useTimer } from "../../utils/timer";
 const Container = styled.div`
   display: flex;
   gap: 1rem;
-`;
-
-const ControlsColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.5rem;
 `;
 
 const ProgressColumn = styled.div`
